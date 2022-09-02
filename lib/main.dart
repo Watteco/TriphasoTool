@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
     serialPortConfig.dtr = 0;
     serialPortConfig.xonXoff = 0;
 
-    timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+    timer = Timer.periodic(Duration(seconds: uart.refreshTime), (timer) {
       //print("timer");
       setState(() {
         actualRefreshTime = uart.refreshTime;

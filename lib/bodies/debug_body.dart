@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,12 +26,23 @@ class _DebugBodyState extends State<DebugBody> {
   final List<String> _statusTimeStamp = ['Yes', 'No'];
   String timeStamp = 'Yes';
   TempoData tempoData = TempoData();
-
+  bool isAtBottom = true;
+  late ScrollDirection scrollDirection;
   @override
   void initState() {
     isDisposed = false;
     dataWithoutTimestamp.add(tempoData.tempoDataWithoutTimestamp);
     dataWithTimestamp.add(tempoData.tempoDataWithTimestamp);
+
+    scrollController.addListener(() {
+      scrollDirection = scrollController.position.userScrollDirection;
+      //if (scrollDirection == ScrollDirection.forward) isAtBottom= false; //Check if the user scroll to the top 
+      if (scrollController.position.atEdge) { //check if the user has put the scrollbar at the bottom
+        isAtBottom = scrollController.position.pixels != 0;
+      } else {
+        isAtBottom= false;
+      }
+    });
 
     super.initState();
   }
@@ -48,14 +60,15 @@ class _DebugBodyState extends State<DebugBody> {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!isDisposed) {//isDisposed is here to prevent error from inactive widget when the page is closed
         setState(() {
-          if (widget.lastData.isNotEmpty) {
-            
-            ///Problem drag and drop
-            // scrollController.animateTo(
-            //   scrollController.position.maxScrollExtent, 
-            //   duration: const Duration(milliseconds: 200),
-            //   curve: Curves.easeInOut
-            // );
+          if (widget.lastData.isNotEmpty) {   
+            if (isAtBottom){
+              //keep the scrollBar at the button when new values arrive. But only when the scrollbar is already at the bottom of the page
+              scrollController.animateTo(
+                scrollController.position.maxScrollExtent, 
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut
+              );
+            }
           } 
         });
       }
