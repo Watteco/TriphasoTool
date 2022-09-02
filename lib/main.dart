@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:flutter_window_close/flutter_window_close.dart';
 import 'package:intl/intl.dart';
-import 'package:triphasographapp/bodies/connection.dart';
-import 'package:triphasographapp/bodies/debug_body.dart';
-import 'package:triphasographapp/bodies/fresnel_body.dart';
-import 'package:triphasographapp/bodies/graph_body.dart';
-import 'package:triphasographapp/bodies/data_body.dart';
-import 'package:triphasographapp/classes/tempodata.dart';
+import 'package:triphasotool/bodies/connection.dart';
+import 'package:triphasotool/bodies/debug_body.dart';
+import 'package:triphasotool/bodies/fresnel_body.dart';
+import 'package:triphasotool/bodies/graph_body.dart';
+import 'package:triphasotool/bodies/data_body.dart';
+import 'package:triphasotool/classes/tempodata.dart';
 
 import 'classes/phase.dart';
 import 'classes/phases.dart';
@@ -24,7 +24,7 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const appTitle = 'Triphas\'O';
+  static const appTitle = 'Triphas\'O Tool';
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +200,6 @@ class _MyHomePageState extends State<MyHomePage> {
     
     if (uart.isOpen) {
       nbBytes = uart.port.bytesAvailable;
-      print(nbBytes);
       if (nbBytes > 0) {
         data = uart.port.read(nbBytes);
         int startLastTrame = checkForLastTrameStart(data);
@@ -209,7 +208,6 @@ class _MyHomePageState extends State<MyHomePage> {
           for(int i= startLastTrame; i<nbBytes; i++) {
             lastData.add(data[i]);
           }
-          print(lastData);
           saveDataIntoTempoClass(lastData);
           saveThreePhasesData(lastData, context);
         }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:graphic/graphic.dart';
-import 'package:triphasographapp/classes/phases.dart';
+import 'package:triphasotool/classes/phases.dart';
 import '../classes/phase.dart';
 import '../classes/phases.dart';
 

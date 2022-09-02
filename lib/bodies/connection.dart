@@ -66,7 +66,6 @@ class _ConnectionState extends State<Connection> {
             onChanged: (phase) => setState(() => {
               selectedPort = phase,
               serialPortActuel.close(),
-              print("portcom ${serialPortActuel.name} deconnected"),
               uart.port = SerialPort(selectedPort!),
               serialPortActuel = uart.port,
               uart.isOpen = false,
@@ -77,6 +76,7 @@ class _ConnectionState extends State<Connection> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
               onPressed: !isClicked ? () {
                   connectToPortCom();
                   setState(() {
@@ -86,6 +86,7 @@ class _ConnectionState extends State<Connection> {
               child: const Text('Connect'),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
               onPressed: !isClicked ? () {
                   setState(() {
                     listPhases = SerialPort.availablePorts;

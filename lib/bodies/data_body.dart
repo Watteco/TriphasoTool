@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:triphasographapp/classes/phases.dart';
+import 'package:triphasotool/classes/phases.dart';
 
 import '../classes/phase.dart';
 import '../classes/serialportselected.dart';

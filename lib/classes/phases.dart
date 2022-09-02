@@ -1,4 +1,4 @@
-import 'package:triphasographapp/classes/phase.dart';
+import 'package:triphasotool/classes/phase.dart';
 
 class Phases {
     List<Phase> phaseA = [];
