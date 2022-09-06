@@ -384,7 +384,5 @@ class _MyHomePageState extends State<MyHomePage> {
         tempoData.tempoDataWithoutTimestamp += decodedData[i];
       }
     }
-    tempoData.tempoDataWithTimestamp += "\n";
-    tempoData.tempoDataWithoutTimestamp += "\n";
   }
 }

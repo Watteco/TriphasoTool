@@ -184,7 +184,7 @@ class _GraphbodyState extends State<Graphbody> {
              if (actualMode != 'D' || selectedPhase != 'Phase 2') Column(
               children: [
                 const Text("Power", style: TextStyle(fontWeight: FontWeight.bold)),
-                GraphWidget(graphName: 'Power',dataToDisplay: dataToDisplay, dataX: dataX, dataY: "activePowerInst", dataChannel: powerChannel,min: minGraph[3], max: maxGraph[3]),
+                GraphWidget(graphName: 'Power',dataToDisplay: dataToDisplay, dataX: dataX, dataY: dataPower, dataChannel: powerChannel,min: minGraph[3], max: maxGraph[3]),
                 RadioGroup<String>.builder(
                   groupValue: power, 
                   direction: Axis.horizontal,
@@ -295,7 +295,7 @@ class _GraphbodyState extends State<Graphbody> {
     minGraph[1] = phase.map((phase) => phase.current.round()).reduce(min)-1;
     if (dataAngle == '(I,V)') { minGraph[2] = phase.map((phase) => phase.angle).reduce(min) -1;}
     else {minGraph[2] = phase.map((phase) => phase.deltaAngle).reduce(min) -1;}
-    if(dataPower == 'activePowerInst') { minGraph[3] = phase.map((phase) => phase.activePowerInst).reduce(min) -1; }
+    if(dataPower == 'Actif') { minGraph[3] = phase.map((phase) => phase.activePowerInst).reduce(min) -1; }
     else { minGraph[3] = phase.map((phase) => phase.reactivePowerInst).reduce(min) -1; }
     
     return minGraph;
@@ -315,7 +315,7 @@ class _GraphbodyState extends State<Graphbody> {
     maxGraph[1] = phase.map((phase) => phase.current.round()).reduce(max) +1;
     if (dataAngle == '(I,V)') { maxGraph[2] = phase.map((phase) => phase.angle).reduce(max) +1;}
     else {maxGraph[2] = phase.map((phase) => phase.deltaAngle).reduce(max) +1;}
-    if(dataPower == 'activePowerInst') { maxGraph[3] = phase.map((phase) => phase.activePowerInst).reduce(max) +1; }
+    if(dataPower == 'Actif') { maxGraph[3] = phase.map((phase) => phase.activePowerInst).reduce(max) +1; }
     else { maxGraph[3] = phase.map((phase) => phase.reactivePowerInst).reduce(max) +1; }
     
     return maxGraph;
@@ -398,11 +398,11 @@ class ChartWidget extends StatelessWidget {
       variables: {
         dataX: Variable(
           accessor: (Map map) => map[dataX] as String,
-          scale: OrdinalScale(tickCount: 5, title: "nb"),
+          scale: OrdinalScale(tickCount: 5),
         ),
         dataY: Variable(
           accessor: (Map map) => map[dataY] as num,
-          scale: LinearScale(min: min,max: max, tickCount: 5, title: "V"),
+          scale: LinearScale(min: min,max: max, tickCount: 5),
         ),
       },
       elements: [

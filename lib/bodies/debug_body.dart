@@ -36,7 +36,6 @@ class _DebugBodyState extends State<DebugBody> {
 
     scrollController.addListener(() {
       scrollDirection = scrollController.position.userScrollDirection;
-      //if (scrollDirection == ScrollDirection.forward) isAtBottom= false; //Check if the user scroll to the top 
       if (scrollController.position.atEdge) { //check if the user has put the scrollbar at the bottom
         isAtBottom = scrollController.position.pixels != 0;
       } else {
@@ -102,7 +101,7 @@ class _DebugBodyState extends State<DebugBody> {
           FloatingActionButton(
             backgroundColor: Colors.orange,
             onPressed: () =>saveCSVFile(),
-            tooltip: 'save CSV file',
+            tooltip: 'save CSV file (/download/documentsTriphaso)',
             child: const Icon(Icons.save),
           ), 
         ]
