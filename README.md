@@ -6,6 +6,7 @@ Compatible with software starting from V3.5.2.5958
 ## Software Tools
 * Visual Studio Code with flutter (https://code.visualstudio.com/download)  
 * Driver Usb400 if using USB400 converter to get uart data (https://www.acksys.fr/produit/30-usb400/)  
+* Inno Setup (https://jrsoftware.org/isdl.php)
 
 ## Sensors
 * Triphas'O
@@ -17,6 +18,8 @@ For the USB400 Converter you will need to connect respectively the 'A' and 'B' p
 For the converter USB-RS485 you will need to connect respectively the orange and yellow wires the 'A' and 'B' pins of the Triphas'O.0  
 Otherwise, you will have strange caracteres on the serial port com.
 
+If the converter cable is longer than 1meter, you will need to push the yellow button (in back position) beside the uart port
+
 ## Software Installation
 >https://docs.flutter.dev/get-started/install/windows
 
@@ -25,6 +28,9 @@ Otherwise, you will have strange caracteres on the serial port com.
 The body part change when the user click on an item from the drawer.  
 Each body part code are stored in the body directory.   
 Each classes are in the classes directory.  
+
+### Executable creation
+To create the executable of the app, we used the inno setup app. The script used to create the executable is stored in the installers folder. As well as for the executable you want to share. 
 
 ## Triphaso Cluster
 The clusters "Energy And Power Multi Metering" and "Voltage and Current Multi Metering" are the ones used to receive data in signed values.   

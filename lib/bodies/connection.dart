@@ -18,7 +18,6 @@ class _ConnectionState extends State<Connection> {
   late SerialPort serialPortActuel;
   final myController = TextEditingController();
   SerialPortConfig serialPortConfig = SerialPortConfig();
-  bool isClicked = false;
 
   @override
   void initState() {
@@ -69,7 +68,6 @@ class _ConnectionState extends State<Connection> {
               uart.port = SerialPort(selectedPort!),
               serialPortActuel = uart.port,
               uart.isOpen = false,
-              isClicked = false,
             }), 
           ),
           Row(
@@ -77,21 +75,23 @@ class _ConnectionState extends State<Connection> {
             children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.orange),
-              onPressed: !isClicked ? () {
+              onPressed: !uart.isOpen ? () {
                   connectToPortCom();
                   setState(() {
-                    isClicked = true;
+                    uart.isOpen = true;
                   });
                 } : null,
               child: const Text('Connect'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.orange),
-              onPressed: !isClicked ? () {
-                  setState(() {
-                    listPhases = SerialPort.availablePorts;
-                  });
-                } : null,
+              onPressed: () {
+                listPhases = SerialPort.availablePorts;
+                serialPortActuel.close();
+                setState(() {
+                  uart.isOpen = false;
+                });
+              },
               child: const Text('Rescan'),
             ),
           ]),

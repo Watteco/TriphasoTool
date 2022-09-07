@@ -1,5 +1,5 @@
-name: triphasotool
-description: A new Flutter project.
+name: triphasotool #to change the name (or the version) of the app go to windows/runner/main.cpp
+description: A debug app for the Triphas'O sensor.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

@@ -82,12 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       uart.port.close();
                       timer.cancel();
                     },
+                    style: ElevatedButton.styleFrom(primary: Colors.orange),
                     child: const Text('Yes')),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
-                    child: const Text('No'))
+                    style: ElevatedButton.styleFrom(primary: Colors.orange),
+                    child: const Text('No'),),
               ]);
         });
     });
@@ -173,15 +175,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: const Text('Connection'),
-              onTap: () {
-                myInitialWidget = const Connection();
-                currentWidget.value = "graph_body";
-                currentWidget.notifyListeners();
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
               title: const Text('Debug'),
               onTap: () {
                 myInitialWidget = DebugBody(lastData);
@@ -190,6 +183,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
             ),
+            ListTile(
+              title: const Text('Connection'),
+              onTap: () {
+                myInitialWidget = const Connection();
+                currentWidget.value = "graph_body";
+                currentWidget.notifyListeners();
+                Navigator.pop(context);
+              },
+            )
           ],
         ),
       ),
