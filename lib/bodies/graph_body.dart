@@ -117,7 +117,7 @@ class _GraphbodyState extends State<Graphbody> {
             dataToDisplay = changeDataToDisplay(phase!),
             minGraph = getMinForGraph(phase,  voltage, angle, power),
             maxGraph = getMaxForGraph(selectedPhase!, voltage, angle, power),
-            if (phase != 'D') {
+            if (actualMode != 'D') {
               angle = '(I,V)',
               voltage = 'V',
             },

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:triphasotool/classes/phases.dart';
 
+import '../classes/dataphase.dart';
 import '../classes/phase.dart';
 import '../classes/serialportselected.dart';
 
@@ -15,26 +16,21 @@ class DataBody extends StatefulWidget {
   State<DataBody> createState() => _DataBodyState();
 }
 
-class DataPhase {
-  List<String> phaseValues;
-  List<String> instantaneousValues;
-  List<String> averageValues;
-  String mode;
-
-  DataPhase({required this.phaseValues, required this.instantaneousValues, required this.averageValues, required this.mode});
-}
 
 class _DataBodyState extends State<DataBody> {
   var uart = SerialportSelected();
   String actualMode = 'S';
-  List<String> listPhases = ['Phase 1','Phase 2', 'Phase 3', 'Sum Phases'] ;
+  List<String> listPhases = ['All Phases','Phase 1','Phase 2', 'Phase 3', 'Sum Phases'] ;
   String? selectedPhase = 'Phase 1';
   List<String> phaseDefinition = ["V", "I","(I1,V1)","(I1, U12)", "U12" ];
+  List<String> phaseADefinition = ["V", "I","(I1,V1)","(I1, U12)", "U12" ];
+  List<String> phaseBDefinition = ["V", "I","(I2,V2)","(I2, U13)", "U13" ];
+  List<String> phaseCDefinition = ["V", "I","(I3,V3)","(I3, U32)", "U32" ];
+
   List<String> epDefinition = ["","Active Power", "ReActive Power", "Active Energy", "ReActive Energy"];
-  DataPhase actualPhase = DataPhase(phaseValues: ["0V","0A","0°","0°","0V"], 
-                                    instantaneousValues: ["Instantaneous","0","0","0","0"], 
-                                    averageValues: ["Average on Xs","0","0"],
-                                    mode:"");
+  DataPhase actualPhase = DataPhase();
+  DataPhase dataPhaseA = DataPhase(), dataPhaseB = DataPhase(), dataPhaseC = DataPhase(), dataPhaseD = DataPhase();
+
   int index=0;
   bool isDisposed = false;
   late Timer timer;
@@ -57,9 +53,16 @@ class _DataBodyState extends State<DataBody> {
       if (!isDisposed) {//isDisposed is here to prevent error from inactive widget when the page is closed
         setState(() {
           if (widget.phases.phaseA.isNotEmpty) {
-            actualPhase =  changeTabsValues(widget.phases,selectedPhase, actualPhase, context);
+            actualPhase =  changeTabsValues(widget.phases,selectedPhase, context);
             phaseDefinition = changeLegendNames(selectedPhase);
             actualMode = widget.phases.phaseA[widget.phases.i].mode;
+
+            //for 'all phases' selection
+            dataPhaseA =  changeTabsValues(widget.phases,'Phase 1', context);
+            dataPhaseB =  changeTabsValues(widget.phases,'Phase 2', context);
+            dataPhaseC =  changeTabsValues(widget.phases,'Phase 3', context);
+            dataPhaseD =  changeTabsValues(widget.phases,'Sum Phases', context);
+
           } 
         });
       }
@@ -89,30 +92,99 @@ class _DataBodyState extends State<DataBody> {
           onChanged: (phase) => setState(() => {
             selectedPhase = phase,
             if (widget.phases.phaseA.isNotEmpty) {
-              actualPhase =  changeTabsValues(widget.phases,selectedPhase, actualPhase, context),
+              actualPhase =  changeTabsValues(widget.phases,selectedPhase, context),
               phaseDefinition = changeLegendNames(selectedPhase),
             } 
           }), 
           hint: const Text('Choose a Phase')),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 20, top: 20),
-          child:Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (selectedPhase != 'Sum Phases') ColumnData(definition: phaseDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
-              if (selectedPhase != 'Sum Phases') const SizedBox(width: 50),
-              if (selectedPhase != 'Sum Phases') ColumnData(definition: actualPhase.phaseValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
-              if (selectedPhase != 'Sum Phases') const SizedBox(width: 150),
-              ColumnData(definition: epDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),
-              const SizedBox(width: 50),
-              ColumnData(definition: actualPhase.instantaneousValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),
-              const SizedBox(width: 50),
-              ColumnData(definition: actualPhase.averageValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2)
-            ],
-          )
-        )
-      ],);
+        if (selectedPhase != 'All Phases') DataDisplay(selectedPhase: selectedPhase, phaseDefinition: phaseDefinition, actualMode: actualMode, actualPhase: actualPhase, epDefinition: epDefinition),
+        
+        if (selectedPhase == 'All Phases') Row(
+          children: [
+            Column(
+              children: [
+                const TitleDataBlock(title: 'Phase 1', marginTop: 20),
+                DataDisplay(selectedPhase: 'Phase 1', phaseDefinition: phaseADefinition, actualMode: actualMode, actualPhase: dataPhaseA, epDefinition: epDefinition),
+                const TitleDataBlock(title: 'Phase 2', marginTop: 150),
+                DataDisplay(selectedPhase: 'Phase 2', phaseDefinition: phaseBDefinition, actualMode: actualMode, actualPhase: dataPhaseB, epDefinition: epDefinition),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 100),
+              child: Column(
+                children: [
+                  const TitleDataBlock(title: 'Phase 3', marginTop: 20),
+                  DataDisplay(selectedPhase: 'Phase 3', phaseDefinition: phaseCDefinition, actualMode: actualMode, actualPhase: dataPhaseC, epDefinition: epDefinition),
+                  const TitleDataBlock(title: 'Sum Phases', marginTop: 150),
+                  DataDisplay(selectedPhase: 'Sum Phases', phaseDefinition: phaseADefinition, actualMode: actualMode, actualPhase: dataPhaseD, epDefinition: epDefinition),
+                ],
+              ),
+            )
+                      
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+///Allows the title of the data block to have some space above and a style 
+class TitleDataBlock extends StatelessWidget {
+  const TitleDataBlock({
+    Key? key,
+    required this.title,
+    required this.marginTop,
+  }) : super(key: key);
+
+  final String title;
+  final double marginTop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: marginTop),
+      child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline, color: Color.fromARGB(238, 255, 136, 1))),
+    );
+  }
+}
+
+///Filling the valeurs in the data block
+class DataDisplay extends StatelessWidget {
+  const DataDisplay({
+    Key? key,
+    required this.selectedPhase,
+    required this.phaseDefinition,
+    required this.actualMode,
+    required this.actualPhase,
+    required this.epDefinition,
+  }) : super(key: key);
+
+  final String? selectedPhase;
+  final List<String> phaseDefinition;
+  final String actualMode;
+  final DataPhase actualPhase;
+  final List<String> epDefinition;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, top: 20),
+      child:Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (selectedPhase != 'Sum Phases') ColumnData(definition: phaseDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
+          if (selectedPhase != 'Sum Phases') const SizedBox(width: 50),
+          if (selectedPhase != 'Sum Phases') ColumnData(definition: actualPhase.phaseValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
+          if (selectedPhase != 'Sum Phases') const SizedBox(width: 150),
+          ColumnData(definition: epDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),
+          const SizedBox(width: 50),
+          ColumnData(definition: actualPhase.instantaneousValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),
+          const SizedBox(width: 50),
+          ColumnData(definition: actualPhase.averageValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2)
+        ],
+      )
+    );
   }
 }
 
@@ -191,31 +263,32 @@ class _ColumnDataState extends State<ColumnData> {
   }
 
   ///Update the data showed in the screen depending on the selected phase
-  DataPhase changeTabsValues(Phases phases, String? selectedPhase, DataPhase actualDataPhase, BuildContext context) {  
+  DataPhase changeTabsValues(Phases phases, String? selectedPhase, BuildContext context) { 
+    DataPhase dataPhase = DataPhase(); 
     switch (selectedPhase) {
       case "Phase 1":
-          actualDataPhase = updateDataPhase(phases.phaseA[phases.phaseA.length-1], 1);
+          dataPhase = updateDataPhase(phases.phaseA[phases.phaseA.length-1], 1);
         break;
       case "Phase 2":
-          actualDataPhase =  updateDataPhase(phases.phaseB[phases.phaseB.length-1], 2);
+          dataPhase =  updateDataPhase(phases.phaseB[phases.phaseB.length-1], 2);
         break;
       case "Phase 3":
-          actualDataPhase =  updateDataPhase(phases.phaseC[phases.phaseC.length-1], 3);
+          dataPhase =  updateDataPhase(phases.phaseC[phases.phaseC.length-1], 3);
         break;
       case "Sum Phases":
-          actualDataPhase =  updateDataPhase(phases.phaseABC[phases.phaseABC.length-1], 4);
+          dataPhase =  updateDataPhase(phases.phaseABC[phases.phaseABC.length-1], 4);
         break;
       default:
-        actualDataPhase = actualDataPhase;
+        dataPhase = dataPhase;
         break;
     }
 
-    return actualDataPhase;
+    return dataPhase;
   }
   
   ///Retrieve data from the phase in order to save them into dataphase class variable
   DataPhase updateDataPhase (Phase phase, int nbPhase) {
-    DataPhase dataPhase = DataPhase(phaseValues: List.empty(), instantaneousValues: List.empty(), averageValues: List.empty(),mode: '');
+    DataPhase dataPhase = DataPhase();
     
     dataPhase.phaseValues = ['${phase.voltage} V', 
                               '${phase.current} A', 

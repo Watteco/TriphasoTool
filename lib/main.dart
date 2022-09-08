@@ -217,6 +217,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  ///Chez one the last trame save begin
+  int checkForLastTrameStart(Uint8List data) {
+    int cpt =0;
+    for (int i=data.length-1; i>=0; i--) {
+      if (data[i] == 65 && cpt == 7) { return i; }
+      else if (data[i] == 66 || data[i] == 67 || data[i] == 67 || data[i] == 84 || data[i] == 10) {cpt ++;} 
+    }
+    return -1;
+  }
+
   /// Browsing the data list containing the values of the 3 phases sent by uart in order to save them into global class
   void saveThreePhasesData(List<int>  data, BuildContext context) {
     bool saveValue = false, savePhase = false;
@@ -326,7 +336,6 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }  
   }
-
   
   ///Saving phase information into global class
   bool saveDataIntoClass(Phase readingPhase, int nbPhasesRead, BuildContext context ) {
@@ -355,15 +364,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return false;
   }
   
-  ///Chez one the last trame save begin
-  int checkForLastTrameStart(Uint8List data) {
-    int cpt =0;
-    for (int i=data.length-1; i>=0; i--) {
-      if (data[i] == 65 && cpt == 7) { return i; }
-      else if (data[i] == 66 || data[i] == 67 || data[i] == 67 || data[i] == 68 || data[i] == 10) {cpt ++;} 
-    }
-    return -1;
-  }
 
   ///Save the date into a tempoClass in order to see all of them on the debugBody
   void saveDataIntoTempoClass(List<int> lastData) {
@@ -372,12 +372,12 @@ class _MyHomePageState extends State<MyHomePage> {
     String dateString = DateFormat('yyyy-MM-dd kk.mm.ss').format(DateTime.now());
     
     for(int i=0; i<decodedData.length; i++) {
-      if (decodedData[i] == 'A' || decodedData[i] == 'B' || decodedData[i] == 'C' || decodedData[i] == 'D') {
+      if (decodedData[i] == 'A' || decodedData[i] == 'B' || decodedData[i] == 'C' || decodedData[i] == 'T') {
         tempoData.tempoDataWithTimestamp += "$dateString, ";
       }
 
       //If phase D change the name to have the most understable one (ABC for A+B+C)
-      if (decodedData[i] == 'D') { 
+      if (decodedData[i] == 'T') { 
         tempoData.tempoDataWithTimestamp += 'ABC';
         tempoData.tempoDataWithoutTimestamp += 'ABC';
         }
