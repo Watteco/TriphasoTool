@@ -31,6 +31,8 @@ Each classes are in the classes directory.
 
 ### Executable creation
 To create the executable of the app, we used the inno setup app. The script used to create the executable is stored in the installers folder. As well as for the executable you want to share. 
+  
+In order to create the exectuble, you need first to write in the terminal of vscode the following line : 'flutter build app'. Then open the file 'inno_triphasotool_script.iss' and change the variable MyPathToFolder depending of where you download the code. At each major modification of the app, don't forget to change the app version. Then run this program and your .exe will be update or created.  
 
 ## Triphaso Cluster
 The clusters "Energy And Power Multi Metering" and "Voltage and Current Multi Metering" are the ones used to receive data in signed values.   
