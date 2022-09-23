@@ -174,9 +174,9 @@ class DataDisplay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (selectedPhase != 'Sum Phases') ColumnData(definition: phaseDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
-          if (selectedPhase != 'Sum Phases') const SizedBox(width: 50),
+          if (selectedPhase != 'Sum Phases') const SizedBox(width: 30),
           if (selectedPhase != 'Sum Phases') ColumnData(definition: actualPhase.phaseValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 1),
-          if (selectedPhase != 'Sum Phases') const SizedBox(width: 150),
+          if (selectedPhase != 'Sum Phases') const SizedBox(width: 80),
           ColumnData(definition: epDefinition, boldVariable: true, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),
           const SizedBox(width: 50),
           ColumnData(definition: actualPhase.instantaneousValues, boldVariable: false, isDeltaMode: actualMode == 'D' ? true : false, columnType : 2),

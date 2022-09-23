@@ -98,9 +98,9 @@ class _FresnelbodyState extends State<Fresnelbody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Legend : ", style:  TextStyle(fontWeight: FontWeight.bold)),
-                  selectedVoltage == 'U' ? Text('(I1,U12) : ${widget.phases.phaseA[widget.phases.i].angle}°') : Text('(I1,V1) : ${widget.phases.phaseA[widget.phases.i-1].angle}°'),
-                  selectedVoltage == 'U' ? Text('(I2,U13) : ${widget.phases.phaseB[widget.phases.i].angle}°') : Text('(I2,V2) : ${widget.phases.phaseB[widget.phases.i-1].angle}°'),
-                  selectedVoltage == 'U' ? Text('(I3,U32) : ${widget.phases.phaseC[widget.phases.i].angle}°') : Text('(I3,V3) : ${widget.phases.phaseC[widget.phases.i-1].angle}°'),
+                  selectedVoltage == 'U' ? Text('(I1,U12) : ${widget.phases.phaseA[widget.phases.i].deltaAngle}°') : Text('(I1,V1) : ${widget.phases.phaseA[widget.phases.i-1].angle}°'),
+                  selectedVoltage == 'U' ? Text('(I2,U13) : ${widget.phases.phaseB[widget.phases.i].deltaAngle}°') : Text('(I2,V2) : ${widget.phases.phaseB[widget.phases.i-1].angle}°'),
+                  selectedVoltage == 'U' ? Text('(I3,U32) : ${widget.phases.phaseC[widget.phases.i].deltaAngle}°') : Text('(I3,V3) : ${widget.phases.phaseC[widget.phases.i-1].angle}°'),
                   printLineForCheckBox(selectedVoltage,isAngleAIsChecked,'1'),
                   printLineForCheckBox(selectedVoltage,isAngleBIsChecked,'2'),
                   printLineForCheckBox(selectedVoltage,isAngleCIsChecked,'3')
@@ -193,34 +193,35 @@ class FresnelDiagram extends CustomPainter {
       drawVector(canvas, beginPoint, 0, 0, longueurV1, paint1,'V1');
     }
 
-    if(isAngleBIsChecked && phases.phaseA.isNotEmpty ) {
-      if(selectedVoltage == 'V') { longueurV2 = phases.phaseB[phases.phaseB.length-1].voltage*((sizeCustomPainter/2)-30)/300; }
-      else { longueurV2 = phases.phaseB[phases.phaseB.length-1].deltaVoltage*((sizeCustomPainter/2)-30)/300; }
-      drawVector(canvas, beginPoint, 0, 120, longueurV2, paint2,'V2');
-    }
-
     if(isAngleCIsChecked && phases.phaseA.isNotEmpty ) {
       if(selectedVoltage == 'V') { longueurV3 = phases.phaseC[phases.phaseC.length-1].voltage*((sizeCustomPainter/2)-30)/300; }
-      else  { longueurV3 = phases.phaseC[phases.phaseC.length-1].deltaVoltage*((sizeCustomPainter/2)-30)/300; }
-      drawVector(canvas, beginPoint, 120, 120, longueurV3, paint3,'V3');
+      else { longueurV3 = phases.phaseC[phases.phaseC.length-1].deltaVoltage*((sizeCustomPainter/2)-30)/300; }
+      drawVector(canvas, beginPoint, 0, 120, longueurV3, paint3,'V3');
     }
 
+    if(isAngleBIsChecked && phases.phaseA.isNotEmpty ) {
+      if(selectedVoltage == 'V') { longueurV2 = phases.phaseB[phases.phaseB.length-1].voltage*((sizeCustomPainter/2)-30)/300; }
+      else  { longueurV2 = phases.phaseB[phases.phaseB.length-1].deltaVoltage*((sizeCustomPainter/2)-30)/300; }
+      drawVector(canvas, beginPoint, 120, 120, longueurV2, paint2,'V2');
+    }
+
+
     if(isAngleAIsChecked && phases.phaseA.isNotEmpty ) {
-      longueurI1 = 45; //phases.phaseA[phases.phaseA.length-1].current*((sizeCustomPainter/2)-30)/200;
+      longueurI1 = phases.phaseA[phases.phaseA.length-1].current*((sizeCustomPainter/2)-30)/200;
       if(selectedVoltage == 'V') { drawVector(canvas, beginPoint, 0, -phases.phaseA[phases.phaseA.length-1].angle.toDouble(), longueurI1, paint1,'I1'); }
       else { drawVector(canvas, beginPoint, 0, -phases.phaseA[phases.phaseA.length-1].deltaAngle.toDouble(), longueurI1, paint1,'I1'); }
     }
 
-    if(isAngleBIsChecked && phases.phaseA.isNotEmpty ) {
-      longueurI2 = 90; //phases.phaseB[phases.phaseB.length-1].current*((sizeCustomPainter/2)-30)/200;
-      if(selectedVoltage == 'V') { drawVector(canvas, beginPoint, 120, -phases.phaseB[phases.phaseB.length-1].angle.toDouble(), longueurI2, paint2, 'I2'); }
-      else {  drawVector(canvas, beginPoint, 120, -phases.phaseB[phases.phaseB.length-1].deltaAngle.toDouble(), longueurI2, paint2, 'I2'); }
+    if(isAngleCIsChecked && phases.phaseA.isNotEmpty ) {
+      longueurI3 = phases.phaseC[phases.phaseC.length-1].current*((sizeCustomPainter/2)-30)/200;
+      if(selectedVoltage == 'V') { drawVector(canvas, beginPoint, 120, -phases.phaseC[phases.phaseC.length-1].angle.toDouble(), longueurI3, paint3, 'I3'); }
+      else {  drawVector(canvas, beginPoint, 120, -phases.phaseC[phases.phaseC.length-1].deltaAngle.toDouble(), longueurI3, paint3, 'I3'); }
     }
 
-    if(isAngleCIsChecked && phases.phaseA.isNotEmpty ) {
-      longueurI3 = 90; //phases.phaseC[phases.phaseC.length-1].current*((sizeCustomPainter/2)-30)/200;
-      if(selectedVoltage == 'V') { drawVector(canvas, beginPoint, 240, -phases.phaseC[phases.phaseC.length-1].angle.toDouble(), longueurI3, paint3,'I3'); }
-      else { drawVector(canvas, beginPoint, 240, -phases.phaseC[phases.phaseC.length-1].deltaAngle.toDouble(), longueurI3, paint3,'I3'); }
+    if(isAngleBIsChecked && phases.phaseA.isNotEmpty ) {
+      longueurI2 = phases.phaseB[phases.phaseB.length-1].current*((sizeCustomPainter/2)-30)/200;
+      if(selectedVoltage == 'V') { drawVector(canvas, beginPoint, 240, -phases.phaseB[phases.phaseB.length-1].angle.toDouble(), longueurI2, paint2,'I2'); }
+      else { drawVector(canvas, beginPoint, 240, -phases.phaseB[phases.phaseB.length-1].deltaAngle.toDouble(), longueurI2, paint2,'I2'); }
     }
   }
 
