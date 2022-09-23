@@ -5,11 +5,12 @@
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Watteco"
 #define MyAppExeName "triphasotool.exe"
+#define MyPathFolder "C:\Users\lisad\triphasotool"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{36658127-8B79-44ED-BB9A-585ABFBE3D68}
+AppId={{18788DD5-C87D-45EB-94A4-BC3C68CBB6DD}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -18,9 +19,9 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\lisad\triphasotool\installers
+OutputDir={#MyPathFolder}\installers
 OutputBaseFilename=triphasotool_{#MyAppVersion}
-SetupIconFile=C:\Users\lisad\triphasotool\images\logoWatteco.ico
+SetupIconFile={#MyPathFolder}\images\logoWatteco.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,12 +34,12 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\flutter_libserialport_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\flutter_window_close_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\serialport.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\lisad\triphasotool\build\windows\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyPathFolder}\build\windows\runner\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPathFolder}\build\windows\runner\Release\flutter_libserialport_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPathFolder}\build\windows\runner\Release\flutter_window_close_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPathFolder}\build\windows\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPathFolder}\build\windows\runner\Release\serialport.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPathFolder}\build\windows\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
