@@ -13,7 +13,7 @@ Compatible with software starting from V3.5.2.5958
 * USB400 Converter or USB-RS485-WE (https://fr.rs-online.com/web/p/convertisseurs-et-adaptateurs-d-interface/6877834)
 
 For the USB400 Converter you will need to connect respectively the 'A' and 'B' pins to the 'B' and 'A' pins of the Triphas'O. 
-![Alt text](images/usb400converter.jpg?raw=true "Title")
+![Alt text](images/usb400Converter.jpg?raw=true "Title")
 
 For the converter USB-RS485 you will need to connect respectively the orange and yellow wires the 'A' and 'B' pins of the Triphas'O.0  
 Otherwise, you will have strange caracteres on the serial port com.
