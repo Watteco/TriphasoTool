@@ -24,7 +24,7 @@ If the converter cable is longer than 1meter, you will need to push the yellow b
 >https://docs.flutter.dev/get-started/install/windows
 
 ### Architecture Code
-*main.dart* contains the main code used to launch the application. The main page is composed of a banner with a drawer and a body part.   
+*main.dart* contains the main code used to launch the application is in /lib. The main page is composed of a banner with a drawer and a body part.   
 The body part change when the user click on an item from the drawer.  
 Each body part code are stored in the body directory.   
 Each classes are in the classes directory.  
