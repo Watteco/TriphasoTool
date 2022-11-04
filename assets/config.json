@@ -1,0 +1,7 @@
+{
+  "config": {
+    "serialPort": {
+      "baudRate": 460800
+    }
+  }
+}
