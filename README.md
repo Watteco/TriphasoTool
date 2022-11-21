@@ -60,10 +60,10 @@ If this window doesn't show, use *File -> New..* (or Ctrl+N)
 
 Then fill out the following information:
 
->Application name: TriphasoTool
->Application version: (You know it better than I)
->Application publisher: Watteco
->Application website: https://watteco.fr/
+>Application name: TriphasoTool  
+>Application version: (You know it better than I)  
+>Application publisher: Watteco  
+>Application website: https://watteco.fr/  
 
 ![Screenshot of the setup wizard with the information above filled in](images/innoSetup2.png?raw=true "App info window")
 
@@ -90,10 +90,10 @@ In the Application file association window, uncheck the checkbox, then press nex
 
 Press next until you reach the compiler settings.
 
->Custom compiler output folder: A path of your choice
->Compiler output base file name: TriphasoTool vX.X Setup *(Where X.X is the version, like 1.0 for instance)*
->Custom setup icon file: Found in *<project>/../images/W-Icon.ico*
->Setup password: Leave empty
+>Custom compiler output folder: A path of your choice  
+>Compiler output base file name: TriphasoTool vX.X Setup *(Where X.X is the version, like 1.0 for instance)*  
+>Custom setup icon file: Found in *<project>/../images/W-Icon.ico*  
+>Setup password: Leave empty  
 
 Then click on next, until finish.
 
