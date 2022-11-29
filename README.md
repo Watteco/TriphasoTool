@@ -37,7 +37,7 @@ Each classes are in the classes directory.
 
 #### 1. Build the project
 
-First yo must input the following command in the *flutter project terminal*
+First you must input the following command in the *flutter project terminal*
 
 >flutter build windows
 
@@ -91,7 +91,7 @@ In the Application file association window, uncheck the checkbox, then press nex
 Press next until you reach the compiler settings.
 
 >Custom compiler output folder: A path of your choice  
->Compiler output base file name: TriphasoTool vX.X Setup *(Where X.X is the version, like 1.0 for instance)*  
+>Compiler output base file name: TriphasoTool Setup
 >Custom setup icon file: Found in *<project>/../images/W-Icon.ico*  
 >Setup password: Leave empty  
 
