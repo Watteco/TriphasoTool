@@ -91,7 +91,7 @@ In the Application file association window, uncheck the checkbox, then press nex
 Press next until you reach the compiler settings.
 
 >Custom compiler output folder: A path of your choice  
->Compiler output base file name: TriphasoTool Setup
+>Compiler output base file name: TriphasoTool Setup  
 >Custom setup icon file: Found in *<project>/../images/W-Icon.ico*  
 >Setup password: Leave empty  
 
