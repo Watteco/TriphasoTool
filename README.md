@@ -25,7 +25,7 @@ If the converter cable is longer than 1 meter, you will need to push the yellow 
 * Follow the instructions here:
 >https://docs.flutter.dev/get-started/install/windows
 
-To make flutter work best, you'll need visual studio code and android studio on yor computer.
+To make flutter work best, you'll need visual studio code and android studio on your computer.
 
 ### Architecture Code
 *main.dart* contains the main code used to launch the application is in /lib. The main page is composed of a banner with a drawer and a body part.   
@@ -52,7 +52,7 @@ The following procedure has to be done *once* for a computer, a script file is t
 
 Install Inno and open it, then select the option *“create a new script file using the script wizard”*.
 
-![The Inno setup software welcome screen](https://protocoderspoint.com/wp-content/uploads/2022/02/inno-setup-create-image-2-min.jpg?ezimgfmt=ng:webp/ngcb20 "The welcome screen")
+![The Inno setup software welcome screen](images/innoSetup1.png?raw=true "The welcome screen")
 
 If this window doesn't show, use *File -> New..* (or Ctrl+N)
 
