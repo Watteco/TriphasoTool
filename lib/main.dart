@@ -26,17 +26,21 @@ class MyApp extends StatelessWidget {
 
   static const appTitle = 'Triphas\'O Tool';
 
+  // =========================== CHANGE VERSION HERE ===========================
+  static const appVersion = '1.1';
+  // ===========================================================================
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appTitle,
+      title: '$appTitle $appVersion',
       theme: ThemeData(
         textTheme: const TextTheme(
           bodyText2: TextStyle(color: Colors.black),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: appTitle),
+      home: const MyHomePage(title: '$appTitle $appVersion'),
     );
   }
 }
@@ -91,13 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         uart.port.close();
                         timer.cancel();
                       },
-                      style: ElevatedButton.styleFrom(primary: Colors.orange),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange),
                       child: const Text('Yes')),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
-                    style: ElevatedButton.styleFrom(primary: Colors.orange),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange),
                     child: const Text('No'),
                   ),
                 ]);

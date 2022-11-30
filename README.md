@@ -19,7 +19,7 @@ For the USB400 Converter you will need to connect respectively the 'A' and 'B' p
 For the converter USB-RS485 you will need to connect respectively the orange and yellow wires to the 'A' and 'B' pins of the Triphas'O.  
 Otherwise, you will have strange characters on the serial port com.
 
-If the converter cable is longer than 1 meter, you will need to push the yellow button (in back position) beside the uart port
+If the converter cable is longer than 1 meter, you will need to push the yellow button (in back position) beside the uart port.
 
 ## Software Installation
 * Follow the instructions here:
@@ -104,7 +104,12 @@ After the end of this procedure, you'll be able to build the setup again just by
 
 The executable setup shoud now be in the *custom compiler output folder* you selected. You can now freely distribute it.
 
-After each major modification of the app, don't forget to change the app version on the script and on the application in the "windows/runner/main.cpp" file (line : if (!window.CreateAndShow(L"triphasotool_v1.0", origin, size)).
+After each major modification of the app, don't forget to change the app version on the script and on the application in the *lib/main.dart* file.  
+```
+  // =========================== CHANGE VERSION HERE ===========================
+  static const appVersion = 'X.X';
+  // ===========================================================================
+```
 
 ## Triphaso Cluster
 The clusters "Energy And Power Multi Metering" and "Voltage and Current Multi Metering" are the ones used to receive data in signed values.   
