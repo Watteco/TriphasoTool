@@ -1,10 +1,12 @@
+## Releases/download
+Get the latest windows release here:  
+>https://github.com/Watteco/TriphasoTool/releases  
+Or on the right of your screen in the *Releases* section.  
+
 # TriphasoTool
 Tool for Triphaso developped with flutter.  
 It allows an easy way to read data sent by the Triphaso by uart. And also to have a visual aspect of them.  
 Compatible with software starting from V3.5.2.5958  
-
-## Releases
-Get the latest windows release [here](https://github.com/Watteco/TriphasoTool/releases) or on the right of your screen in the *Releases* section.
 
 ## Software Tools
 * Visual Studio Code with flutter (https://code.visualstudio.com/download)  
