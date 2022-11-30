@@ -110,12 +110,29 @@ After the end of this procedure, you'll be able to build the setup again just by
 
 The executable setup shoud now be in the *custom compiler output folder* you selected. You can now freely distribute it.
 
+### *For Watteco members:*
 After each major modification of the app, don't forget to change the app version on the script and on the application in the *lib/main.dart* file.  
 ```
   // =========================== CHANGE VERSION HERE ===========================
   static const appVersion = 'X.X';
   // ===========================================================================
 ```
+When incrementing the version don't forget to publish a new release with an official installer and a changelog.
+
+To do so, produce a new installer of the new version as explained in the *Executable creation* section above.  
+After creation, rename the setup "TriphasoTool v*X.X* Setup" (with the new version number).  
+Then go to https://github.com/Watteco/TriphasoTool/releases and click "*Draft a new release*".  
+Create a new tag named "vX.X" with the new version number and set the title as "Triphas'O Tool *X.X*" (again with the new version number).  
+Write what changed since the previous official release, for instance:  
+```
+### Triphas'O Tool v1.1
+#### Changes from the initial 1.0 release:
+
+ - Added a config file to customize serial transmission speed
+ - Increased the default transmission speed to 460800
+ ...
+```
+Then add your created installer before clicking on "*Publish release*".
 
 ## Triphaso Cluster
 The clusters "Energy And Power Multi Metering" and "Voltage and Current Multi Metering" are the ones used to receive data in signed values.   
