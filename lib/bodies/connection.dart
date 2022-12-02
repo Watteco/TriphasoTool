@@ -69,7 +69,7 @@ class _ConnectionState extends State<Connection> {
           Container(
             margin: const EdgeInsets.only(top: 150),
             child: const Text(
-                'Select the Port Coms on wich the Triphas\'O is connected :',
+                'Select the communication port on which the Triphas\'O is connected:',
                 style: TextStyle(fontSize: 20)),
           ),
           DropdownButton<String>(
@@ -114,7 +114,7 @@ class _ConnectionState extends State<Connection> {
           Container(
             margin: const EdgeInsets.only(top: 50),
             child: const Text(
-                'Enter the number of seconds for a refresh of the data :',
+                'Enter the number of seconds for a refresh of the data:',
                 style: TextStyle(fontSize: 20)),
           ),
           SizedBox(
