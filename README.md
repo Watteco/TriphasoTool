@@ -33,6 +33,13 @@ If the converter cable is longer than 1 meter, you will need to push the yellow 
 
 To make flutter work best, you'll need visual studio code and android studio on your computer.
 
+For this version of the TriphasoTool, you will need to download Dart and Flutter 3.3.0 
+(you can install them with Visual Studio code by typing your extension's name, going to parameters and choosing "Install Specific Version...").
+
+You will also need to download the Flutter SDK manually (version 3.3.5 stable) at the URL https://docs.flutter.dev/release/archive .
+
+You shouldn't put your SDK folder in your project folder in order to avoid some errors.
+
 ### Architecture Code
 *main.dart* contains the main code used to launch the application is in /lib. The main page is composed of a banner with a drawer and a body part.   
 The body part change when the user click on an item from the drawer.  
