@@ -156,6 +156,6 @@ So, it is the ones you will need to configure in order to see changes in the app
 ### Serial Protocol explanation
 4 frames sending each second  
 The first frame is for the 'Phase 1' values, the 2nd for 'Phase 2', the 3rd for 'Phase 3' and the 4th for 'Phase A+B+C'  
-The data sent in order are : Phase - Mode - Voltage - Current - Angle - Active Power - Reactive Power - Average Active Power - Average Reactive Power - Active Energy - Reactive Energy - Average Timing   
+The data sent in order are : Phase - Mode - Voltage - Current - Angle - Active Power - Reactive Power - Average Active Power - Average Reactive Power - Active Energy - Reactive Energy - Average Timing - THD Voltage - THD Current - Fundamental Active Power - Fundamental Reactive Power - Average Fundamental Active Power - Average Fundamental Reactive Power - Fundamental Active Energy - Fundamental Reactive Energy
 
 The sensor can be in 3 differents mode : S (star), D (delta) and M (Monophase)

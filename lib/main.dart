@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   static const appTitle = 'Triphas\'O Tool';
 
   // =========================== CHANGE VERSION HERE ===========================
-  static const appVersion = '1.1';
+  static const appVersion = '2.0 dev';
   // ===========================================================================
 
   @override
@@ -259,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<int> dataRead = [];
     Phase readingPhase = Phase();
 
-    if (data[0] == 65) {
+    if (data[0] == 65) {   //code ASCII pour A
       //we browse the data list containing the values of the 3 phases sent by uart
       for (int i = 0; i < data.length; i++) {
         if (data[i] == 44) {
@@ -289,14 +289,14 @@ class _MyHomePageState extends State<MyHomePage> {
         //If saveValue = all the digits of the number have been read, we can save it
         if (saveValue) {
           switch (dataIndex) {
-            case 0:
+            case 0:      //phase
               saveValue = false;
               break;
-            case 1:
+            case 1:      //mode (monophasé, triphasé delta ou étoile)
               readingPhase.mode = ascii.decode(dataRead);
               saveValue = false;
               break;
-            case 2:
+            case 2:      //tension
               if (readingPhase.mode == 'D') {
                 readingPhase.deltaVoltage = double.parse(
                     (double.parse(ascii.decode(dataRead)) / 10)
@@ -311,87 +311,147 @@ class _MyHomePageState extends State<MyHomePage> {
               }
               saveValue = false;
               break;
-            case 3:
+            case 3:      //courant
               readingPhase.current = double.parse(ascii.decode(dataRead)) / 10;
               saveValue = false;
               break;
-            case 4:
-              if (readingPhase.mode == 'D') {
-                readingPhase.deltaAngle =
-                    (int.parse(ascii.decode(dataRead)) + 360) % 360;
+            case 4:      //déphasage
+	            if (readingPhase.mode == 'D') {
+        	      readingPhase.deltaAngle =
+                	(int.parse(ascii.decode(dataRead)) + 360) % 360;
                 if (nbPhasesRead == 0) {
-                  readingPhase.angle =
-                      (readingPhase.deltaAngle - 30 + 360) % 360;
+                	readingPhase.angle =
+                    (readingPhase.deltaAngle - 30 + 360) % 360;
                 } else if (nbPhasesRead == 1) {
-                  readingPhase.angle =
-                      (readingPhase.deltaAngle - 90 + 360) % 360;
+                	readingPhase.angle =
+                    (readingPhase.deltaAngle - 90 + 360) % 360;
                 } else {
-                  readingPhase.angle =
-                      (readingPhase.deltaAngle + 30 + 360) % 360;
+                	readingPhase.angle =
+                    (readingPhase.deltaAngle + 30 + 360) % 360;
                 }
-              } else {
-                readingPhase.angle =
-                    (int.parse(ascii.decode(dataRead)) + 360) % 360;
+	            } else {
+        	      readingPhase.angle =
+                	(int.parse(ascii.decode(dataRead)) + 360) % 360;
                 readingPhase.deltaAngle = 0;
-              }
-              saveValue = false;
-              break;
-            case 5:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.activePowerInst = 0;
-              } else {
-                readingPhase.activePowerInst =
-                    int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 6:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.reactivePowerInst = 0;
-              } else {
-                readingPhase.reactivePowerInst =
-                    int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 7:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.activePowerAv = 0;
-              } else {
+	            }
+	            saveValue = false;
+	            break;
+            case 5:      //puissance active instantanée
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.activePowerInst = 0;
+	            } else {
+        	      readingPhase.activePowerInst =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 6:      //puissance réactive instantanée
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.reactivePowerInst = 0;
+	            } else {
+        	      readingPhase.reactivePowerInst =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 7:      //puissance active moyenne
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.activePowerAv = 0;
+	            } else {
                 readingPhase.activePowerAv = int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 8:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.reactivePowerAv = 0;
-              } else {
-                readingPhase.reactivePowerAv =
-                    int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 9:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.activeEnergy = 0;
-              } else {
-                readingPhase.activeEnergy = int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 10:
-              if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
-                readingPhase.reactiveEnergy = 0;
-              } else {
-                readingPhase.reactiveEnergy = int.parse(ascii.decode(dataRead));
-              }
-              saveValue = false;
-              break;
-            case 11:
-              readingPhase.timingSec = int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 8:      //puissance réactive moyenne
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.reactivePowerAv = 0;
+	            } else {
+        	      readingPhase.reactivePowerAv =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 9:      //énergie active
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.activeEnergy = 0;
+	            } else {
+        	      readingPhase.activeEnergy = int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 10:      //énergie réactive
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.reactiveEnergy = 0;
+	            } else {
+        	      readingPhase.reactiveEnergy = int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 11:      //durée d'échantillonnage
+	            readingPhase.timingSec = int.parse(ascii.decode(dataRead));
+	            //dataIndex = -1;
+	            saveValue = false;
+	            break;
+            case 12:      //taux de distorsion harmonique en tension
+	            readingPhase.tHDV = double.parse(ascii.decode(dataRead)) / 10;
+	            saveValue = false;
+	            break;
+            case 13:      //taux de distorsion harmonique en courant
+	            readingPhase.tHDI = double.parse(ascii.decode(dataRead)) / 10;
+	            saveValue = false;
+	            break;
+            case 14:      //puissance active fondamentale instantanée
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundActivePowerInst = 1;
+	            } else {
+        	      readingPhase.fundActivePowerInst =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 15:      //puissance réactive fondamentale instantanée
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundReactivePowerInst = 0;
+	            } else {
+        	      readingPhase.fundReactivePowerInst =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 16:      //puissance active fondamentale moyenne
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundActivePowerAv = 0;
+	            } else {
+        	      readingPhase.fundActivePowerAv = int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 17:      //puissance réactive fondamentale moyenne
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundReactivePowerAv = 0;
+	            } else {
+        	      readingPhase.fundReactivePowerAv =
+                	int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 18:      //énergie active fondamentale
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundActiveEnergy = 0;
+	            } else {
+        	      readingPhase.fundActiveEnergy = int.parse(ascii.decode(dataRead));
+	            }
+	            saveValue = false;
+	            break;
+            case 19:      //énergie réactive fondamentale
+	            if (readingPhase.mode == 'D' && nbPhasesRead == 1) {
+        	      readingPhase.fundReactiveEnergy = 0;
+	            } else {
+        	      readingPhase.fundReactiveEnergy = int.parse(ascii.decode(dataRead));
+	            }
               dataIndex = -1;
-              saveValue = false;
-              break;
+	            saveValue = false;
+	            break;
           }
 
           //Empty the buffer list in order to read a new value

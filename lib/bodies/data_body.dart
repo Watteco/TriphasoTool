@@ -26,17 +26,21 @@ class _DataBodyState extends State<DataBody> {
     'Sum Phases'
   ];
   String? selectedPhase = 'All Phases';
-  List<String> phaseDefinition = ["V", "I", "(I1,V1)", "(I1, U12)", "U12"];
-  List<String> phaseADefinition = ["V", "I", "(I1,V1)", "(I1, U12)", "U12"];
-  List<String> phaseBDefinition = ["V", "I", "(I2,V2)", "(I2, U13)", "U13"];
-  List<String> phaseCDefinition = ["V", "I", "(I3,V3)", "(I3, U32)", "U32"];
+  List<String> phaseDefinition = ["V", "I", "THDV", "THDI", "(I1,V1)", "(I1, U12)", "U12"];
+  List<String> phaseADefinition = ["V", "I", "THDV", "THDI", "(I1,V1)", "(I1, U12)", "U12"];
+  List<String> phaseBDefinition = ["V", "I", "THDV", "THDI", "(I2,V2)", "(I2, U13)", "U13"];
+  List<String> phaseCDefinition = ["V", "I", "THDV", "THDI", "(I3,V3)", "(I3, U32)", "U32"];
 
   List<String> epDefinition = [
     "",
     "Active Power",
     "ReActive Power",
     "Active Energy",
-    "ReActive Energy"
+    "ReActive Energy",
+    "Fundamental Active Power",
+    "Fundamental ReActive Power",
+	  "Fundamental Active Energy",
+	  "Fundamental ReActive Energy"
   ];
   DataPhase actualPhase = DataPhase();
   DataPhase dataPhaseA = DataPhase(),
@@ -332,9 +336,9 @@ String getModeName(String mode) {
 
 ///Update the legend showed in the screen depending on the selected phase
 List<String> changeLegendNames(String? selectedPhase) {
-  List<String> phaseADefinition = ["V", "I", "(I1,V1)", "(I1, U12)", "U12"];
-  List<String> phaseBDefinition = ["V", "I", "(I2,V2)", "(I2, U13)", "U13"];
-  List<String> phaseCDefinition = ["V", "I", "(I3,V3)", "(I3, U32)", "U32"];
+  List<String> phaseADefinition = ["V", "I", "%", "%", "(I1,V1)", "(I1, U12)", "U12"];
+  List<String> phaseBDefinition = ["V", "I", "%", "%", "(I2,V2)", "(I2, U13)", "U13"];
+  List<String> phaseCDefinition = ["V", "I", "%", "%", "(I3,V3)", "(I3, U32)", "U32"];
 
   switch (selectedPhase) {
     case "Phase 1":
@@ -381,6 +385,8 @@ DataPhase updateDataPhase(Phase phase, int nbPhase) {
   dataPhase.phaseValues = [
     '${phase.voltage} V',
     '${phase.current} A',
+    '${phase.tHDV} %',
+    '${phase.tHDI} %',
     '${phase.angle} °',
     '${phase.deltaAngle.toString()} °',
     '${phase.deltaVoltage} V'
@@ -402,13 +408,19 @@ DataPhase updateDataPhase(Phase phase, int nbPhase) {
       '${phase.activePowerInst.toString()} W',
       '${phase.reactivePowerInst.toString()} Var',
       '${phase.activeEnergy.toString()} W.h',
-      '${phase.reactiveEnergy.toString()} Var.h'
+      '${phase.reactiveEnergy.toString()} Var.h',
+      '${phase.fundActivePowerInst.toString()} W',
+      '${phase.fundReactivePowerInst.toString()} Var',
+      '${phase.fundActiveEnergy.toString()} W.h',
+      '${phase.fundReactiveEnergy.toString()} Var.h'
     ];
 
     dataPhase.averageValues = [
       'Average on ${phase.timingSec} s',
       '${phase.activePowerAv.toString()} W',
-      '${phase.reactivePowerAv.toString()} Var'
+      '${phase.reactivePowerAv.toString()} Var',
+      '${phase.fundActivePowerAv.toString()} W',
+      '${phase.fundReactivePowerAv.toString()} Var'
     ];
   }
 
